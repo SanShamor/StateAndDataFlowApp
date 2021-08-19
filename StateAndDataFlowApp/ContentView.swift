@@ -13,18 +13,34 @@ struct ContentView: View {
     //@StateObject - для слежения за изменением состояния экземпляра класса в реальном времени
     
     var body: some View {
-        VStack {
-            Text("Hello, Mr.\(user.name)!")
-                .font(.largeTitle)
-                .offset(x: 0, y: 100)
-            Text("\(timer.counter)")
-                .font(.largeTitle)
-                .offset(x: 0, y: 200)
-            Spacer()
-            ButtonView(timer: timer)
-            Spacer()
+        NavigationView {
+            VStack {
+                Text("Hello, \(user.name)!")
+                    .font(.largeTitle)
+                Text("\(timer.counter)")
+                    .font(.largeTitle)
+                VStack {
+                    Spacer()
+                    ButtonView(timer: timer)
+                    Spacer()
+                    NavigationLink(destination: RegisterView()) {
+                        Text("Log Out")
+                            .frame(width: 200, height: 60)
+                            .foregroundColor(.white)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(20)
+                            .font(.title)
+                    }
+                    .frame(width: 200, height: 60)
+                    .cornerRadius(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth:4)
+                    )
+                    Spacer()
+                }
+            }
         }
-        
     }
 }
 
@@ -47,6 +63,24 @@ struct ButtonView: View {
         }
         .frame(width: 200, height: 60)
         .background(Color.red)
+        .cornerRadius(20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.black, lineWidth:4)
+        )
+    }
+}
+
+struct logOutButton: View {
+    var body: some View {
+        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/){
+            Text("Log Out")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+        }
+        .frame(width: 200, height: 60)
+        .background(Color.blue)
         .cornerRadius(20)
         .overlay(
             RoundedRectangle(cornerRadius: 20)

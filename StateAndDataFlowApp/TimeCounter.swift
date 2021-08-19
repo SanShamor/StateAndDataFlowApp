@@ -13,7 +13,7 @@ class TimeCounter: ObservableObject {
     let objectWillChange = PassthroughSubject<TimeCounter, Never>()
     //благодаря этому свойству наш класс сможет уведомлять подписчиков об изменении своего состояния
     //говорим какой тип данных отправляем- тип TimeCounter
-    //Never - тут можно определить тип Error для отправки ошибок, но это оффлайн приложение
+    //Never - тут можно определить тип Error для отправки ошибок, но у нас оффлайн приложение
     
     var counter = 3
     var timer: Timer?

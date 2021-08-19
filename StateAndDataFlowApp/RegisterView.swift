@@ -13,8 +13,13 @@ struct RegisterView: View {
     
     var body: some View {
         VStack {
-            TextField("Enter your name", text: $name)
-                .multilineTextAlignment(.center)
+            HStack {
+                TextField("Enter your name", text: $name)
+                    .multilineTextAlignment(.center)
+                Text("\(name.count) symbols")
+                    .foregroundColor(.red)
+                Spacer()
+            }
             Button(action: registerUser) {
                 HStack {
                     Image(systemName: "checkmark.circle")
@@ -23,8 +28,9 @@ struct RegisterView: View {
             }
         }
     }
+    
     private func registerUser() {
-        if !name.isEmpty {
+        if !name.isEmpty && name.count >= 4 {
             user.name = name
             user.isRegister.toggle()
         }
