@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State private var name = ""
-    @EnvironmentObject var user: UserManager
+    @EnvironmentObject var userManager: UserManager
     
     var body: some View {
         VStack {
             HStack {
-                TextField("Enter your name", text: $name)
-                    .multilineTextAlignment(.center)
-                Text("\(name.count) symbols")
-                    .foregroundColor(.red)
+                Spacer()
+                UserNameTF(
+                    name: $userManager.user.name,
+                    nameIsValid: userManager.nameIsValid
+                )
                 Spacer()
             }
             Button(action: registerUser) {
@@ -30,9 +30,9 @@ struct RegisterView: View {
     }
     
     private func registerUser() {
-        if !name.isEmpty && name.count >= 4 {
-            user.name = name
-            user.isRegister.toggle()
+        if !userManager.user.name.isEmpty {
+            userManager.user.isRegistered.toggle()
+            DataManager.shared.saveUser(user: userManager.user)
         }
     }
 }
@@ -40,5 +40,22 @@ struct RegisterView: View {
 struct RegisteredView_Previews: PreviewProvider {
     static var previews: some View {
         RegisterView()
+    }
+}
+
+struct UserNameTF: View {
+    
+    @Binding var name: String
+    var nameIsValid = false
+    
+    var body: some View {
+        ZStack {
+            TextField("Your name", text: $name)
+            HStack {
+                Spacer()
+                Text("\(name.count)")
+                    .foregroundColor(nameIsValid ? .green : .red)
+            }
+        }
     }
 }
